@@ -1,17 +1,17 @@
 // Initialize pin assignments
-#define Lpwm_pin 5            //pin of controlling speed---- ENA of motor driver board
-#define Rpwm_pin 10           //pin of controlling speed---- ENB of motor driver board
-int pinLB = 2;                //pin of controlling turning---- IN1 of motor driver board
-int pinLF = 4;                //pin of controlling turning---- IN2 of motor driver board
-int pinRB = 7;                //pin of controlling turning---- IN3 of motor driver board
-int pinRF = 8;                //pin of controlling turning---- IN4 of motor driver board
-unsigned char Lpwm_val = 200; //initialized left wheel speed at 250
-unsigned char Rpwm_val = 200; //initialized right wheel speed at 250
-int Car_state = 0;            //the working state of car
-int servopin = 3;             //defining digital port pin 3, connecting to signal line of servo motor
-int myangle;                  //defining variable of angle
-int pulsewidth;               //defining variable of pulse width
-unsigned char DuoJiao = 90;   //initialized angle of motor at 90°
+#define Lpwm_pin 5            // pin of controlling speed---- ENA of motor driver board
+#define Rpwm_pin 10           // pin of controlling speed---- ENB of motor driver board
+int pinLB = 2;                // pin of controlling turning---- IN1 of motor driver board
+int pinLF = 4;                // pin of controlling turning---- IN2 of motor driver board
+int pinRB = 7;                // pin of controlling turning---- IN3 of motor driver board
+int pinRF = 8;                // pin of controlling turning---- IN4 of motor driver board
+unsigned char Lpwm_val = 200; // initialized left wheel speed at 200 (try if max is at 255)
+unsigned char Rpwm_val = 200; // initialized right wheel speed at 200 (try if max is at 255)
+int Car_state = 0;            // the working state of car
+int servopin = 3;             // defining digital port pin 3, connecting to signal line of servo motor
+int myangle;                  // defining variable of angle
+int pulsewidth;               // defining variable of pulse width
+unsigned char DuoJiao = 90;   // initialized angle of motor at 90°
 int inputPin = A0;            // ultrasonic module ECHO to A0
 int outputPin= A1;            // ultrasonic module TRIG to A1
 
@@ -188,11 +188,15 @@ void setup() {
   M_Control_IO_config();     //motor controlling the initialization of IO
   Set_Speed(Lpwm_val,Rpwm_val);  //setting initialized speed
   Set_servopulse(DuoJiao);       //setting initialized motor angle
-  pinMode(inputPin, INPUT);      //starting receiving IR remote control signal
-  pinMode(outputPin, OUTPUT);    //IO of ultrasonic module
+  pinMode(inputPin, INPUT);      //IO of ultrasonic module ECHO
+  pinMode(outputPin, OUTPUT);    //IO of ultrasonic module TRIG
   Serial.begin(9600);            //initialized serial port , using Bluetooth as serial port, setting baud 
   stopp();                       //stop
 } 
 void loop() {
-  Self_Control();   
+  Self_Control();
+  // PID pid(kp, ki, kd)
+  // error = H - DistRef;
+  // deltaSpeed = pid.calculate(error); // calculate PID using ultrasonic sensor distance reading
+  // Set_Speed(deltaSpeed, deltaSpeed); // use Set_Speed to set output speed from PID controller output
 }
