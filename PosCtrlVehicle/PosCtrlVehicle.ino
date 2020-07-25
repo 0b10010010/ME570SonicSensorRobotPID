@@ -18,7 +18,7 @@ int inputPin = A0;            // ultrasonic module ECHO to A0
 int outputPin= A1;            // ultrasonic module TRIG to A1
 
 /*      kp | ki | kd | i_lo | i_hi | out_lo | out_hi */
-PID pid(255., 0.,  0.,  -1.,    1.,  100.,    255.); // lower output limit has to be 80 since below 80 cannot overcome necessary torque to move the vehicle
+PID pid(255., 0.,  0.,  -1.,    1.,  100.,    255.); // lower output limit has to be 100 since below 100 cannot overcome necessary torque to move the vehicle
 float outPWM{};
 float refDist{};
 float duration, distance;
