@@ -97,7 +97,7 @@ void loop() {
     lastTime = micros();
   } else {                                   // need to run speed control
     dt = startTime - lastTime;
-    deltaSpeed = pid.run(abs(error), dt);     // pid.run(float error, float dt)
+    deltaSpeed = pid.run(abs(error), dt);    // pid.run(float error, float dt)
     lastTime = micros();
     /* decide the direction of the vehicle */
     if (error < 0.0f) {                      // vehicle needs to back up
